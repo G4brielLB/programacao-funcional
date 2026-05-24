@@ -1,0 +1,9 @@
+ghci> True : []
+[True]
+ghci> False : it
+[False,True]
+ghci> False : it
+[False,False,True]
+
+ghci> 2 : []
+[2]
