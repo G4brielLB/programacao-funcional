@@ -83,6 +83,9 @@ matchLivro termo_buscado (titulo, palavras_chave)
 -- Verificar livros atrasados
 livrosAtrasados :: BancodeDados -> Day -> [Emprestimo]
 livrosAtrasados [] _ = []
-livrosAtrasados ((inquilino, livro, data_vencimento) : resto) data_atual
-  | data_vencimento < data_atual = (inquilino, livro, data_vencimento) : livrosAtrasados resto data_atual
+livrosAtrasados (emprestimo : resto) data_atual
+  | estaAtrasado emprestimo data_atual = emprestimo : livrosAtrasados resto data_atual
   | otherwise = livrosAtrasados resto data_atual
+
+estaAtrasado :: Emprestimo -> Day -> Bool
+estaAtrasado (_, _, data_vencimento) data_atual = data_vencimento < data_atual

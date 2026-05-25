@@ -101,8 +101,12 @@ def devolve_livro(banco, fulano, livro_devolvido):
 def livros_atrasados(banco, data_atual):
     if not banco:
         return []
-    inquilino, livro, data_vencimento = banco[0]
+    emprestimo = banco[0]
     resto = banco[1:]
-    if data_vencimento < data_atual:
-        return [(inquilino, livro, data_vencimento)] + livros_atrasados(resto, data_atual)
+    if esta_atrasado(emprestimo, data_atual):
+        return [emprestimo] + livros_atrasados(resto, data_atual)
     return livros_atrasados(resto, data_atual)
+
+def esta_atrasado(emprestimo, data_atual):
+    _, _, data_vencimento = emprestimo
+    return data_vencimento < data_atual
